@@ -1,0 +1,33 @@
+{
+  "name": "nodejs-base-template",
+  "version": "1.0.0",
+  "description": "This is a nodejs base template",
+  "keywords": [
+    "nodejs",
+    "base",
+    "template"
+  ],
+  "homepage": "https://github.com/aayuspudasaini/nodejs-base-template#readme",
+  "bugs": {
+    "url": "https://github.com/aayuspudasaini/nodejs-base-template/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aayuspudasaini/nodejs-base-template.git"
+  },
+  "license": "ISC",
+  "author": "aayuspudasaini",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "http-status-codes": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
