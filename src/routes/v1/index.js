@@ -1,7 +1,6 @@
 const { Router } = require("express");
-const { InfoController } = require("../../controller");
 const router = Router();
 
-router.get("/info", InfoController.handleInfoController);
+router.use(require("./auth.route"));
 
 module.exports = router;
