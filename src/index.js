@@ -1,11 +1,11 @@
 const express = require("express");
 const { ServerConfig } = require("./config");
 const apiRoutes = require("./routes");
+const expressConfig = require("./config/express.config");
 const app = express();
 
 // middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+await expressConfig(app);
 
 // routes
 app.use("/api", apiRoutes);
