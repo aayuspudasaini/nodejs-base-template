@@ -1,18 +1,23 @@
-const express = require("express");
-
-require("module-alias/reqister");
-
-const { ServerConfig } = require("./config");
-const apiRoutes = require("./routes");
-const expressConfig = require("./config/express.config");
+import express from "express";
+import { config } from "./config";
 const app = express();
 
-// middlewares
-expressConfig(app);
+// console.log(config.PORT);
 
-// routes
-app.use("/api", apiRoutes);
+// server configuration
+const startServer = (port) => {
+  app
+    .listen(port, () => {
+      console.log(`Server is running on Port - ${port}`);
+    })
+    .on("error", (err) => {
+      if (err.code === "EADDRINUSE") {
+        console.log(`Port - ${port} is already in use`);
+        startServer(port + 1);
+      } else {
+        console.log("App Error", err);
+      }
+    });
+};
 
-app.listen(ServerConfig.PORT, () =>
-  console.log(`Server is running on Port ${ServerConfig.PORT}`)
-);
+startServer(Number(8000));

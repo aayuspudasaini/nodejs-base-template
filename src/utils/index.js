@@ -1,4 +1,2 @@
-module.exports = {
-  hash: require("./hashing"),
-  otp: require("./otp-generator"),
-};
+export * from "./get-env";
+export * from "./otp-generator";
