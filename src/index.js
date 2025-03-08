@@ -1,12 +1,14 @@
 const express = require("express");
 
+require("module-alias/reqister");
+
 const { ServerConfig } = require("./config");
 const apiRoutes = require("./routes");
 const expressConfig = require("./config/express.config");
 const app = express();
 
 // middlewares
-await expressConfig(app);
+expressConfig(app);
 
 // routes
 app.use("/api", apiRoutes);

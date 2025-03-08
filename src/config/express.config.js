@@ -11,8 +11,4 @@ module.exports = (app) => {
   app.use(helmet());
   app.use(cookieParser());
   app.use(express.static(__dirname + "/public"));
-
-  // if (process.env.NODE_ENV === "development") {
-  //   app.use(morgan("dev"));
-  // }
 };
