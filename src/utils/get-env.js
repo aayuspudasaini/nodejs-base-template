@@ -1,8 +1,8 @@
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 
 dotenv.config(); // load .env file
 
-export const getEnv = (key, defaultValue = "") => {
+exports.getEnv = (key, defaultValue = "") => {
   const value = process.env[key];
   if (value === undefined) {
     if (defaultValue) {

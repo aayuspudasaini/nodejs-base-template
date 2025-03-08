@@ -1,8 +1,16 @@
-import express from "express";
-import { config } from "./config";
+require("module-alias/register");
+
+const express = require("express");
+
+const { config, db, exp } = require("@config");
+
 const app = express();
 
-// console.log(config.PORT);
+// express configuration
+exp.config(app);
+
+// database configuration
+db.connect(config.MONGO_URI);
 
 // server configuration
 const startServer = (port) => {
@@ -20,4 +28,4 @@ const startServer = (port) => {
     });
 };
 
-startServer(Number(8000));
+startServer(Number(config.PORT));

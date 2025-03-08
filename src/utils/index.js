@@ -1,2 +1,5 @@
-export * from "./get-env";
-export * from "./otp-generator";
+const { getEnv } = require("./get-env");
+
+module.exports = {
+  getEnv,
+};

@@ -1,4 +1,4 @@
-import { getEnv } from "@utils";
+const { getEnv } = require("@utils");
 
 const appConfig = () => ({
   NODE_ENV: getEnv("NODE_ENV", "development"),
@@ -6,6 +6,8 @@ const appConfig = () => ({
 
   BASE_PATH: getEnv("BASE_PATH", "/api"),
   MONGO_URI: getEnv("MONGO_URI", ""),
+
+  FRONTEND_URL: getEnv("FRONTEND_URL", "http://localhost:3000"),
 });
 
-export const config = appConfig();
+exports.config = appConfig();
