@@ -9,7 +9,7 @@ const { hash } = require("../utils");
 const { StatusCodes } = require("http-status-codes");
 const { User } = require("../models");
 const jwt = require("jsonwebtoken");
-const serverConfig = require("../config/server.config");
+const { config } = require("@config");
 const { transport } = require("../middlewares/index.js");
 const {
   hmacProcess,
@@ -33,7 +33,7 @@ exports.signin = async (req, res) => {
     if (!isExist)
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
-        message: "The credentials provided didnot match",
+        message: "The credentials provided didn't match",
       });
 
     // checking if password is correct or not
@@ -42,12 +42,12 @@ exports.signin = async (req, res) => {
     if (!isMatch)
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
-        message: "The credentials provided didnot match",
+        message: "The credentials provided didn't match",
       });
 
     const token = jwt.sign(
       { id: isExist._id, email: isExist.email, verified: isExist.verified },
-      serverConfig.JWT_SECRET,
+      config.JWT_SECRET,
       {
         expiresIn: "8h",
       }
@@ -145,17 +145,14 @@ exports.sendVerificationCode = async (req, res) => {
     const codeValue = Math.floor(Math.random() * 1000000).toString();
 
     let info = await transport.sendMail({
-      from: serverConfig.SMTP_EMAIL,
+      from: config.SMTP_EMAIL,
       to: isExist.email,
       subject: "Verification Code",
       html: `<h1>Your Verification Code is ${codeValue}</h1>`,
     });
 
     if (info.accepted[0] === isExist.email) {
-      const hashedCodeValue = hash.hmacProcess(
-        codeValue,
-        serverConfig.HMAC_SECRET
-      );
+      const hashedCodeValue = hash.hmacProcess(codeValue, config.HMAC_SECRET);
 
       isExist.verificationCode = hashedCodeValue;
 
@@ -229,10 +226,7 @@ exports.verifyVerificationCode = async (req, res) => {
     }
 
     // checking if code is valid
-    const hashedCodeValue = hmacProcess(
-      code.toString(),
-      serverConfig.HMAC_SECRET
-    );
+    const hashedCodeValue = hmacProcess(code.toString(), config.HMAC_SECRET);
 
     if (hashedCodeValue === isExist.verificationCode) {
       isExist.verified = true;
@@ -325,17 +319,14 @@ exports.sendForgetPasswordCode = async (req, res) => {
     const codeValue = Math.floor(Math.random() * 1000000).toString();
 
     let info = await transport.sendMail({
-      from: serverConfig.SMTP_EMAIL,
+      from: config.SMTP_EMAIL,
       to: isExist.email,
       subject: "Forget Password Code",
       html: `<h1>Your Code is ${codeValue}</h1>`,
     });
 
     if (info.accepted[0] === isExist.email) {
-      const hashedCodeValue = hash.hmacProcess(
-        codeValue,
-        serverConfig.HMAC_SECRET
-      );
+      const hashedCodeValue = hash.hmacProcess(codeValue, config.HMAC_SECRET);
 
       isExist.forgetPasswordCode = hashedCodeValue;
 
@@ -394,7 +385,7 @@ exports.VerifyForgetPasswordCode = async (req, res) => {
       });
     }
 
-    const hashedCode = hmacProcess(code.toString(), serverConfig.HMAC_SECRET);
+    const hashedCode = hmacProcess(code.toString(), config.HMAC_SECRET);
 
     if (hashedCode === isExist.forgetPasswordCode) {
       isExist.forgetPasswordCode = undefined;

@@ -2,7 +2,7 @@ require("module-alias/register");
 
 const express = require("express");
 
-const { config, db, exp } = require("@config");
+const { config, db, exp } = require("./config");
 
 const app = express();
 
@@ -11,6 +11,9 @@ exp.config(app);
 
 // database configuration
 db.connect(config.MONGO_URI);
+
+// api routes
+app.use(config.BASE_PATH, require("@routes"));
 
 // server configuration
 const startServer = (port) => {

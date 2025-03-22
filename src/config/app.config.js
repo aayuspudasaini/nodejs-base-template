@@ -10,4 +10,4 @@ const appConfig = () => ({
   FRONTEND_URL: getEnv("FRONTEND_URL", "http://localhost:3000"),
 });
 
-exports.config = appConfig();
+module.exports.config = { appConfig };
